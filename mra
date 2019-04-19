@@ -1,0 +1,115 @@
+#include <stdio.h>
+
+int main() {
+    int i,no_of_process,total=0;
+    float average_waiting_time=0,average_total_turnaround_time=0;
+    int time_value=3;
+    
+    printf("Enter number of process:");
+    scanf("%d",&no_of_process);
+    printf("\n");
+    
+    int burst_time[no_of_process];
+	int process_number[no_of_process];
+	int waiting_time[no_of_process];
+	int turnaround_time[no_of_process];
+	int arrival_time[no_of_process];
+	int start_time[no_of_process];
+	int finish_time[no_of_process];
+	int past_time_value;
+	int total_turnaround_time=0;
+	int total_waiting_time=0;
+	int response_time[no_of_process];
+	int order_of_exceution[no_of_process];
+    int temp_process_number[no_of_process];
+	int total_temp_process_number;           
+    int burst_time_second[no_of_process];
+    for(i=0;i<no_of_process;i++)
+    {
+        printf("Enter Arrival Time of process no p%d\t:",i+1);
+        scanf("%d",&arrival_time[i]);
+        printf("Enter Burst Time of process no p%d\t:",i+1);
+        scanf("%d",&burst_time[i]);
+        burst_time_second[i]=burst_time[i];
+        total+=burst_time[i];                                       
+        process_number[i]=i+1;
+    }
+    
+    int least_burst_time=0,least_burst_time_process,no_of_process_executed=0;
+    printf("\n\n");
+    
+    for(int i=0;i<no_of_process;i++)                               
+    
+        start_time[i]=-1;
+    
+    printf("EXCEUTION ORDER IS AS FOLLOWS FOR SHORT JOB FIRST-:\n");
+    while (no_of_process_executed+1<=no_of_process)                                       
+    {
+        past_time_value=time_value;
+        total_temp_process_number=0;
+        for (int i=0;i<no_of_process;i++){                          
+            if (arrival_time[i]<=time_value && arrival_time[i]>=0){
+                temp_process_number[total_temp_process_number]=i;
+                total_temp_process_number++;
+                if (total_temp_process_number==1){
+                    least_burst_time=burst_time[i];
+                    least_burst_time_process=i;
+                }
+                else{
+                    if(least_burst_time>burst_time[i]){
+                        least_burst_time=burst_time[i];
+                        least_burst_time_process=i;
+                    }
+                }
+            }
+        }
+        
+        
+        if (total_temp_process_number!=0){
+            if (start_time[least_burst_time_process]==-1)
+            start_time[least_burst_time_process]=time_value;
+            if (least_burst_time>10){
+                burst_time[least_burst_time_process]-=10;
+                time_value+=10;
+               
+            }else{
+                time_value+=burst_time[least_burst_time_process];
+                finish_time[least_burst_time_process]=time_value;
+                turnaround_time[least_burst_time_process]=finish_time[least_burst_time_process]-arrival_time[least_burst_time_process];
+                waiting_time[least_burst_time_process]=turnaround_time[least_burst_time_process]-burst_time_second[least_burst_time_process];
+                response_time[least_burst_time_process]=start_time[least_burst_time_process]-arrival_time[least_burst_time_process];
+                total_waiting_time+=waiting_time[least_burst_time_process];
+                total_turnaround_time+=turnaround_time[least_burst_time_process];
+                order_of_exceution[no_of_process_executed]=least_burst_time_process+1;
+                no_of_process_executed++;
+                arrival_time[least_burst_time_process]=-1;
+                printf("process exceuted %d is p%d\n",no_of_process_executed,least_burst_time_process+1);
+            
+            }
+            
+            
+            
+        }
+        if (time_value==past_time_value)                            
+            time_value++;
+       
+        
+    }
+    printf("\t\ttime_value is %d\n",time_value);
+    printf("\n System was idle during exceution for %d\n\n",time_value-total);
+    
+   
+    printf("\n  Process\t|  Burst_Time   |\tWaiting_Time\t| Turnaround_Time | Response_Time");
+    printf("\n--------------------------------------------------------------------------------");
+    for(i=0;i<no_of_process;i++)
+    {
+        printf("\n  p%d\t\t|\t%d\t\t|\t%d\t\t\t|\t%d\t\t\t  |  %d",process_number[i],burst_time_second[i],waiting_time[i],turnaround_time[i],response_time[i]);
+    }
+    
+    printf("\n\n");
+    average_waiting_time=total_waiting_time*1.0/no_of_process;
+    average_total_turnaround_time=total_turnaround_time*1.0/no_of_process;
+    printf("\n\nAverage Waiting Time=%f",average_waiting_time);
+    printf("\nAverage Turnaround Time=%f\n",average_total_turnaround_time);
+    printf("\n\n");
+}
