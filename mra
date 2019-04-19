@@ -42,7 +42,7 @@ int main() {
     
         start_time[i]=-1;
     
-    printf("EXCEUTION ORDER IS AS FOLLOWS FOR SHORT JOB FIRST-:\n");
+    printf("*****EXCEUTION ORDER IS AS FOLLOWS FOR SHORT JOB FIRST-:******\n");
     while (no_of_process_executed+1<=no_of_process)                                       
     {
         past_time_value=time_value;
