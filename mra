@@ -111,5 +111,5 @@ int main() {
     average_total_turnaround_time=total_turnaround_time*1.0/no_of_process;
     printf("\n\nAverage Waiting Time=%f",average_waiting_time);
     printf("\nAverage Turnaround Time=%f\n",average_total_turnaround_time);
-    printf("\n\n");
+    printf("\n\n\n");
 }
